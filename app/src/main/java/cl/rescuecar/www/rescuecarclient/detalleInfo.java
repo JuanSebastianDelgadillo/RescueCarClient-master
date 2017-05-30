@@ -29,6 +29,7 @@ import java.net.URL;
 
 public class detalleInfo extends ConexionMysqlHelper{
 
+    private static final int DURACION_ANIMACION = 600;
     ImageView perfil;
     ImageView internet;
     int servicioInt, cantidadServ;
@@ -40,7 +41,7 @@ public class detalleInfo extends ConexionMysqlHelper{
     TextView rut_user, dig_user, nom_user, ape_user, ema_user, tel_user, patente_serv;
     String[] services;
     EditText etNombre, etApellido, etTelefono, etEmail;
-    int servp=0,servv=0, serve=0, servh=0, servM=0;
+    int servp=0,servv=0, serve=0, servh=0;
     ImageView star1, star2, star3, star4, star5, leftArrow;
     String calif, vehiculo, id_mob;
     LinearLayout llinfop, llinfov, llinfoh, llinfoe, lltp, lltv, llte, llth, llMain;
@@ -99,7 +100,6 @@ public class detalleInfo extends ConexionMysqlHelper{
 
         imp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 gnombre = etNombre.getText().toString();
                 gapellido = etApellido.getText().toString();
                 gemail = etEmail.getText().toString();
@@ -116,9 +116,8 @@ public class detalleInfo extends ConexionMysqlHelper{
                 varglob.setApellido(gapellido);
                 varglob.setTelefono(gtelefono);
                 varglob.setEmail(gemail);
-                llinfop.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); servp=0;
-                ocultarMain();
-                imp.setImageResource(R.mipmap.abajosi);imp.setEnabled(false);
+                ocultarMain(false);
+                ocultarInfoPersonal();
 
                 /****** Agrego en base de datos en otro hilo******/
                 new Handler().postDelayed(new Runnable() {
@@ -138,20 +137,54 @@ public class detalleInfo extends ConexionMysqlHelper{
             }
         });
 
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implementar
+                ocultarMain(false);
+                ocultarMisVehiculos();
+                Toast.makeText(getApplicationContext(),"guardar vehiculos",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implementar
+                ocultarMain(false);
+                ocultarEvalucaciones();
+                Toast.makeText(getApplicationContext(),"guardar evaluaciones",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        imh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implementar
+                ocultarMain(false);
+                ocultarHistorial();
+                Toast.makeText(getApplicationContext(),"guardar historial",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         lltp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ocultarMain();
                 if(servp==0){
+                    ocultarMain(true);
                     imp.setImageResource(R.mipmap.save); imp.setEnabled(true);
-                    llinfop.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT )); servp=1;
+                    Util.expand(llinfop,DURACION_ANIMACION);
+                    servp=1;
                     etNombre.setText(gnombre) ;
                     etApellido.setText(gapellido);
                     etTelefono.setText(gtelefono);
                     etEmail.setText(gemail);
+                    ocultarMisVehiculos();
+                    ocultarEvalucaciones();
+                    ocultarHistorial();
                 }else{
-
-                    llinfop.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); servp=0;
-                    imp.setImageResource(R.mipmap.abajosi);imp.setEnabled(false);
+                    ocultarMain(false);
+                    ocultarInfoPersonal();
                 }
 
             }
@@ -159,26 +192,34 @@ public class detalleInfo extends ConexionMysqlHelper{
 
         lltv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ocultarMain();
                 if(servv==0){
+                    ocultarMain(true);
                     imv.setImageResource(R.mipmap.save); imv.setEnabled(true);
-                    llinfov.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 400)); servv=1;
+                    Util.expand(llinfov, DURACION_ANIMACION);
+                    servv=1;
+                    ocultarInfoPersonal();
+                    ocultarEvalucaciones();
+                    ocultarHistorial();
                 }else{
-                    imv.setImageResource(R.mipmap.abajosi); imv.setEnabled(false);
-                    llinfov.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); servv=0;
+                    ocultarMain(false);
+                    ocultarMisVehiculos();
                 }
             }
         });
 
         llte.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ocultarMain();
                 if(serve==0){
+                    ocultarMain(true);
                     ime.setImageResource(R.mipmap.save);ime.setEnabled(true);
-                    llinfoe.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 400)); serve=1;
+                    Util.expand(llinfoe, DURACION_ANIMACION);
+                    serve=1;
+                    ocultarInfoPersonal();
+                    ocultarMisVehiculos();
+                    ocultarHistorial();
                 }else{
-                    ime.setImageResource(R.mipmap.abajosi); ime.setEnabled(false);
-                    llinfoe.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); serve=0;
+                    ocultarMain(false);
+                    ocultarEvalucaciones();
                 }
 
             }
@@ -186,13 +227,17 @@ public class detalleInfo extends ConexionMysqlHelper{
 
         llth.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ocultarMain();
                 if(servh==0){
+                    ocultarMain(true);
                     imh.setImageResource(R.mipmap.save); imh.setEnabled(true);
-                    llinfoh.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 400)); servh=1;
+                    Util.expand(llinfoh, DURACION_ANIMACION);
+                    servh=1;
+                    ocultarInfoPersonal();
+                    ocultarMisVehiculos();
+                    ocultarEvalucaciones();
                 }else{
-                    imh.setImageResource(R.mipmap.abajosi); imh.setEnabled(false);
-                    llinfoh.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); servh=0;
+                    ocultarMain(false);
+                    ocultarHistorial();
                 }
 
             }
@@ -200,16 +245,40 @@ public class detalleInfo extends ConexionMysqlHelper{
 
     }
 
-    public void ocultarMain() {
-        if (servM==0){
-            llMain.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0));
-            servM=1;
+    private void ocultarInfoPersonal() {
+        Util.collapse(llinfop, DURACION_ANIMACION);
+        servp=0;
+        imp.setImageResource(R.mipmap.abajosi);
+        imp.setEnabled(false);
+    }
+
+    private void ocultarMisVehiculos() {
+        imv.setImageResource(R.mipmap.abajosi);
+        imv.setEnabled(false);
+        Util.collapse(llinfov, DURACION_ANIMACION);
+        servv=0;
+    }
+
+    private void ocultarEvalucaciones() {
+        ime.setImageResource(R.mipmap.abajosi);
+        ime.setEnabled(false);
+        Util.collapse(llinfoe, DURACION_ANIMACION);
+        serve=0;
+    }
+
+    private void ocultarHistorial() {
+        imh.setImageResource(R.mipmap.abajosi);
+        imh.setEnabled(false);
+        Util.collapse(llinfoh, DURACION_ANIMACION);
+        servh=0;
+    }
+
+    public void ocultarMain(boolean ocultar) {
+        if (ocultar){
+            Util.collapse(llMain, DURACION_ANIMACION);
         }else{
-            llMain.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-            servM=0;
+            Util.expand(llMain, DURACION_ANIMACION);
         }
-
-
     }
 
     public void escuchaServicios() {
