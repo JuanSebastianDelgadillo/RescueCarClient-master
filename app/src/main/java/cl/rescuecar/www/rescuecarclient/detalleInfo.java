@@ -99,6 +99,7 @@ public class detalleInfo extends ConexionMysqlHelper{
 
         imp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 gnombre = etNombre.getText().toString();
                 gapellido = etApellido.getText().toString();
                 gemail = etEmail.getText().toString();
