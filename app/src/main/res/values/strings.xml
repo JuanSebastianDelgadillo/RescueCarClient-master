@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">RescueCarClient</string>
+    <string name="title_activity_maps">Rescue Car Client</string>
+
+
+    <string-array name="countries_array">
+        <item>Argentina</item>
+        <item>Bolivia</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>España</item>
+        <item>Estados Unidos</item>
+        <item>Francia</item>
+        <item>Italia</item>
+        <item>Panamá</item>
+        <item>Perú</item>
+        <item>Puerto Rico</item>
+        <item>Rusia</item>
+        <item>Uruguay</item>
+        <item>Venezuela</item>
+    </string-array>
+    <string name="title_activity_mapas">MapasActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
+
+

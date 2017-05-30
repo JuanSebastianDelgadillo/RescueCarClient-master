@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#062B51</color>
+    <color name="colorPrimaryDark">#071634</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="blanco">#ffffff</color>
+    <color name="sombra">#001B44</color>
+    <color name="negro">#000000</color>
+    <color name="aceptar">#01df01</color>
+    <color name="deshabilitado">#585858</color>
+    <color name="letra">#a4a4a4</color>
+    <color name="azul">#062b51</color>
+    <color name="celeste">#a9cefa</color>
+    <color name="gris">#eaeaea</color>
+    <color name="grisObscuro">#a4a4a4</color>
+    <color name="linea">#33b5e5</color>
+</resources>
