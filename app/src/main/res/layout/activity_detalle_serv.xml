@@ -156,7 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tiempo :"
-                android:textColor="@color/azul" />
+                android:textColor="@color/azul"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvTiempo"
@@ -175,11 +176,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="7dp"
-                android:text="Dstancia :"
-                android:textColor="@color/azul" />
+                android:text="Distancia :"
+                android:textColor="@color/azul"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvDistancia"
+                android:id="@+id/tvDist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/azul" />
@@ -194,7 +196,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="Evaluación"
+                android:text="Evaluaciones"
+                android:textColor="@color/azul"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cant: "
                 android:textColor="@color/azul" />
 
             <LinearLayout
@@ -232,6 +242,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     map:srcCompat="@drawable/stardown" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -248,7 +259,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Servicios"
-                android:textColor="@color/azul" />
+                android:textColor="@color/azul"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvServicio1"

@@ -38,14 +38,15 @@ public class detalleInfo extends ConexionMysqlHelper{
     EditText nombre, solicitud, tipo;
     JSONObject jsonObject;
     JSONArray jsonArray;
-    TextView rut_user, dig_user, nom_user, ape_user, ema_user, tel_user, patente_serv;
+    TextView rut_user, dig_user, nom_user, ape_user, ema_user, tel_user, patente_serv, eval1, eval2, eval3, eval4, eval5;
     String[] services;
     EditText etNombre, etApellido, etTelefono, etEmail;
     int servp=0,servv=0, serve=0, servh=0;
     ImageView star1, star2, star3, star4, star5, leftArrow;
-    String calif, vehiculo, id_mob;
+    String calif, vehiculo, id_mob, evaluaciones;
     LinearLayout llinfop, llinfov, llinfoh, llinfoe, lltp, lltv, llte, llth, llMain;
     ImageView imp, imv, ime, imh;
+    EditText marca1, modelo1, patente1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,16 @@ public class detalleInfo extends ConexionMysqlHelper{
         etApellido = (EditText) findViewById(R.id.etApellido);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etTelefono = (EditText) findViewById(R.id.etTelefono);
+        eval1 = (TextView) findViewById(R.id.etEval1);
+        eval2 = (TextView) findViewById(R.id.etEval2);
+        eval3 = (TextView) findViewById(R.id.etEval3);
+        eval4 = (TextView) findViewById(R.id.etEval4);
+        eval5 = (TextView) findViewById(R.id.etEval5);
+        marca1 = (EditText) findViewById(R.id.etMarca1);
+        modelo1 = (EditText) findViewById(R.id.etModelo1);
+        patente1 = (EditText) findViewById(R.id.etPatente1);
+
+
         id_mob = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         escuchaServicios();
         obtenerDatos();
@@ -312,26 +323,21 @@ public class detalleInfo extends ConexionMysqlHelper{
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
-            rut = (String) b.get("rut");
+            grut = (String) b.get("rut");
+            gdiv = (String) b.get("div");
+            gnombre = (String) b.get("nom");
+            gapellido = (String) b.get("ape");
+            gtelefono = (String) b.get("tel");
+            gemail = (String) b.get("ema");
         }
-
-        varGlob varglob = (varGlob) getApplicationContext();
-
-        grut = varglob.getRut();
-        gdiv = varglob.getDiv();
         rut_user.setText(grut+"-"+gdiv) ;
-        gnombre = varglob.getNombre();
-        gapellido = varglob.getApellido();
         nom_user.setText(gnombre+" "+gapellido);
-        gtelefono = varglob.getTelefono();
-        tel_user.setText("+569"+gtelefono);
-        gemail = varglob.getEmail();
         ema_user.setText(gemail);
 
-        BuscarAlerta();
+        BuscarDetalles();
     }
 
-    public void BuscarAlerta() {
+    public void BuscarDetalles() {
 
         new BackgroundTask().execute();
 
@@ -396,15 +402,23 @@ public class detalleInfo extends ConexionMysqlHelper{
                 JSONObject JO = jsonArray.getJSONObject(0);
                 calif = JO.getString("calificaciones");
                 vehiculo = JO.getString("vehiculo");
+                evaluaciones = JO.getString("evaluaciones");
+
+                if (evaluaciones!=null){
+                    //String[]  infoE = evaluaciones.split("&");
+
+                   eval1.setText(evaluaciones);
+
+
+                }
 
                 String[]  infoC = calif.split(",");
-                String[]  infoV = vehiculo.split(",");
 
-                if (infoC.length >= 1 && infoV.length >= 1) {
-
-                    patente_serv.setText(infoV[0]+" "+infoV[1]+" PAT: "+infoV[2]);
+                if (infoC.length >= 1) {
 
                     int valoracion = Integer.parseInt(infoC[0]);
+
+                    Toast.makeText(getApplicationContext(),"Valor : "+valoracion,Toast.LENGTH_SHORT).show();
 
                     switch (valoracion){
 
@@ -435,14 +449,27 @@ public class detalleInfo extends ConexionMysqlHelper{
                             break;
                     }
 
+                }else{
 
-
-                } else {
-
-                    Toast.makeText(this, "No se ha encontrado al conductor de servicio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"No se ha encontrado evaluación",Toast.LENGTH_SHORT).show();
 
                 }
 
+                String[]  infoV = vehiculo.split(",");
+
+                if (infoV[0]!=null){
+
+                    patente_serv.setText(infoV[0]+" "+infoV[1]+" PAT: "+infoV[2]);
+                    marca1.setText(infoV[0]);
+                    modelo1.setText(infoV[1]);
+                    patente1.setText(infoV[2]);
+
+                }else {
+
+                    patente_serv.setText("Vehículo no encontrado");
+
+
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

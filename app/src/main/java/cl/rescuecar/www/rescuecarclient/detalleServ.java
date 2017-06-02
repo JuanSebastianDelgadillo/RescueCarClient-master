@@ -37,7 +37,7 @@ public class detalleServ extends ConexionMysqlHelper {
     String rut_serv, dig_serv, nom_serv, ape_serv, ema_serv, tel_serv, serv_serv;
     String[] services;
     EditText nombre_serv, patente_serv, telefono_serv;
-    TextView serv1,serv2, serv3, serv4, serv5,serv6, serv7, serv8, serv9, serv10, tiempo_serv, distancia_serv;
+    TextView serv1,serv2, serv3, serv4, serv5,serv6, serv7, serv8, serv9, serv10, tiempo_serv, distancia_serv, cant_eva;
     ImageView star1, star2, star3, star4, star5;
     String detalle, calif, vehiculo, servicios_serv;
 
@@ -52,7 +52,8 @@ public class detalleServ extends ConexionMysqlHelper {
         patente_serv= (EditText) findViewById(R.id.etPatente);
         telefono_serv = (EditText) findViewById(R.id.etTelefono);
         tiempo_serv = (TextView) findViewById(R.id.tvTiempo);
-        distancia_serv = (TextView) findViewById(R.id.tvDistancia);
+        distancia_serv = (TextView) findViewById(R.id.tvDist);
+        cant_eva = (TextView) findViewById(R.id.tvCant);
         serv1 = (TextView) findViewById(R.id.tvServicio1);
         serv2 = (TextView) findViewById(R.id.tvServicio2);
         serv3 = (TextView) findViewById(R.id.tvServicio3);
@@ -105,21 +106,18 @@ public class detalleServ extends ConexionMysqlHelper {
         Bundle b = iin.getExtras();
         if (b != null) {
 
-
+            grut = (String) b.get("rut");
+            gdiv = (String) b.get("div");
+            gnombre = (String) b.get("nom");
+            gapellido = (String) b.get("ape");
+            gtelefono = (String) b.get("tel");
+            gemail = (String) b.get("ema");
             tip = (String) b.get("tipo");
-            rut = (String) b.get("rut");
-            time = (String) b.get("time");
-            dist = (String) b.get("dist");
+            rut = (String) b.get("rutg");
+            time = (String) b.get("timeg");
+            dist = (String) b.get("distg");
         }
 
-        varGlob varglob = (varGlob) getApplicationContext();
-
-        grut = varglob.getRut();
-        gdiv = varglob.getDiv();
-        gnombre = varglob.getNombre();
-        gapellido = varglob.getApellido();
-        gtelefono = varglob.getTelefono();
-        gemail= varglob.getEmail();
         BuscarAlerta();
     }
 
@@ -190,25 +188,29 @@ public class detalleServ extends ConexionMysqlHelper {
                 JSONObject JO = jsonArray.getJSONObject(0);
                 detalle = JO.getString("detalle");
                 servicios_serv = JO.getString("servicios");
-                calif = JO.getString("calificaciones");
+                calif = JO.getString("calif");
                 vehiculo = JO.getString("vehiculo");
 
-                if (detalle.length() > 2 && calif.length() > 2 && vehiculo.length() > 2) {
 
-                   String[]  infoP = detalle.split(",");
-                        nombre_serv.setText(infoP[1]+" "+infoP[2]);
-                        telefono_serv.setText("+569"+infoP[3]);
-                        distancia_serv.setText(dist);
-                        tiempo_serv.setText(time);
+                if (detalle.length() > 2 ) {
+                    String[] infoP = detalle.split(",");
+                    nombre_serv.setText(infoP[1] + " " + infoP[2]);
+                    telefono_serv.setText("+569" + infoP[4]);
+                    distancia_serv.setText(dist);
+                    tiempo_serv.setText(time);
+                }
+                if (vehiculo.length() > 2 ) {
 
                     String[] infoV = vehiculo.split(",");
-                        patente_serv.setText(infoV[2]);
+                    patente_serv.setText(infoV[2]);
+                }
 
+                if (servicios_serv.length() > 2 ) {
                     String[] infoS = servicios_serv.split(",");
 
-                    for (int i=0;i<infoS.length;i++){
+                    for (int i = 0; i < infoS.length; i++) {
 
-                        switch(i){
+                        switch (i) {
                             case 0: serv1.setText(tipoAlerta(infoS[0])); break;
                             case 1: serv2.setText(tipoAlerta(infoS[1])); break;
                             case 2: serv3.setText(tipoAlerta(infoS[2])); break;
@@ -219,18 +221,55 @@ public class detalleServ extends ConexionMysqlHelper {
                             case 7: serv8.setText(tipoAlerta(infoS[7])); break;
                             case 8: serv9.setText(tipoAlerta(infoS[8])); break;
                             case 9: serv10.setText(tipoAlerta(infoS[9])); break;
-
                         }
-
                     }
-
-
-                } else {
-
-                    Toast.makeText(this, "No se ha encontrado al conductor de servicio", Toast.LENGTH_SHORT).show();
 
                 }
 
+                String[]  infoC = calif.split(",");
+
+                Toast.makeText(this, "Cant"+infoC[1], Toast.LENGTH_SHORT).show();
+
+                cant_eva.setText("Cant : "+infoC[1]+" eval.");
+
+                if (infoC.length >= 1) {
+
+                    int valoracion = Integer.parseInt(infoC[0]);
+
+                    switch (valoracion){
+
+                        case 1:
+                            star1.setImageResource(R.drawable.starup);
+                            break;
+                        case 2:
+                            star1.setImageResource(R.drawable.starup);
+                            star2.setImageResource(R.drawable.starup);
+                            break;
+                        case 3:
+                            star1.setImageResource(R.drawable.starup);
+                            star2.setImageResource(R.drawable.starup);
+                            star3.setImageResource(R.drawable.starup);
+                            break;
+                        case 4:
+                            star1.setImageResource(R.drawable.starup);
+                            star2.setImageResource(R.drawable.starup);
+                            star3.setImageResource(R.drawable.starup);
+                            star4.setImageResource(R.drawable.starup);
+                            break;
+                        case 5:
+                            star1.setImageResource(R.drawable.starup);
+                            star2.setImageResource(R.drawable.starup);
+                            star3.setImageResource(R.drawable.starup);
+                            star4.setImageResource(R.drawable.starup);
+                            star5.setImageResource(R.drawable.starup);
+                            break;
+                    }
+
+                }else{
+
+                    Toast.makeText(getApplicationContext(),"No se ha encontrado evaluación",Toast.LENGTH_SHORT).show();
+
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -242,40 +281,17 @@ public class detalleServ extends ConexionMysqlHelper {
         String texto = null;
 
         switch (tip_alerta){
-            case "gm":
-                texto = "solicitud de grúa para motocicleta";
-                break;
-            case "ga":
-                texto = "solicitud de grúa para vehículo";
-                break;
-            case "gc":
-                texto = "solicitud de grúa para camioneta";
-                break;
-            case "go":
-                texto = "solicitud de grúa para vehículo mayor";
-                break;
-            case "po":
-                texto = "solicitud de carabineros";
-                break;
-            case "am":
-                texto = "solicitud de ambulancia";
-                break;
-            case "bo":
-                texto = "solicitud de bomberos";
-                break;
-            case "me":
-                texto = "solicitud de mecánico en ruta";
-                break;
-            case "ne":
-                texto = "solicitud de asistencia de neumático";
-                break;
-            case "tr":
-                texto = "solicitud de servicio de transporte";
-                break;
-            case "co":
-                texto = "solicitud de servicio de combustible";
-                break;
-
+            case "gm": texto = "solicitud de grúa para motocicleta"; break;
+            case "ga": texto = "solicitud de grúa para vehículo"; break;
+            case "gc": texto = "solicitud de grúa para camioneta"; break;
+            case "go": texto = "solicitud de grúa para vehículo mayor"; break;
+            case "po": texto = "solicitud de carabineros"; break;
+            case "am": texto = "solicitud de ambulancia"; break;
+            case "bo": texto = "solicitud de bomberos"; break;
+            case "me": texto = "solicitud de mecánico en ruta"; break;
+            case "ne": texto = "solicitud de asistencia de neumático"; break;
+            case "tr": texto = "solicitud de servicio de transporte"; break;
+            case "co": texto = "solicitud de servicio de combustible"; break;
         }
 
         return texto;

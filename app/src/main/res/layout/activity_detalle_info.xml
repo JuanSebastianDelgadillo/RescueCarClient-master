@@ -658,12 +658,53 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:visibility="gone">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="mis evaluaciones"
-            android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/etEval1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:maxLines="5"
+                android:textColor="@color/azul" />
+
+            <TextView
+                android:id="@+id/etEval2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="5"
+                android:textColor="@color/azul" />
+
+            <TextView
+                android:id="@+id/etEval3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="5"
+                android:textColor="@color/azul" />
+
+            <TextView
+                android:id="@+id/etEval4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="5"
+                android:textColor="@color/azul" />
+
+            <TextView
+                android:id="@+id/etEval5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/azul" />
+
         </LinearLayout>
 
         <LinearLayout

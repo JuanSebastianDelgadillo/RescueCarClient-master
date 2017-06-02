@@ -70,7 +70,7 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
     EditText Direccion;
     int prop=0,servicioGPS=0, servicioInt=0;
     String rut, div, nom, ape, dir;
-    String grut, gdiv, gnombre, gapellido,gtelefono;
+    String grut, gdiv, gnombre, gapellido,gtelefono, gemail;
     varGlob varglob;
 
     @Override
@@ -109,7 +109,12 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
         setting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent s = new Intent(getApplicationContext(), detalleInfo.class);
-                s.putExtra("rut",rut);
+                s.putExtra("rut",grut);
+                s.putExtra("div",gdiv);
+                s.putExtra("nom",gnombre);
+                s.putExtra("ape",gapellido);
+                s.putExtra("tel",gtelefono);
+                s.putExtra("ema",gemail);
                 startActivity(s);
             }
         });
@@ -122,6 +127,12 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
 
                 /****** Ingreso segunda pagina ******/
                 Intent a = new Intent(getApplicationContext(), SelEmergencia.class);
+                    a.putExtra("rut",grut);
+                    a.putExtra("div",gdiv);
+                    a.putExtra("nom",gnombre);
+                    a.putExtra("ape",gapellido);
+                    a.putExtra("tel",gtelefono);
+                    a.putExtra("ema",gemail);
                     a.putExtra("dir",dir);
                     a.putExtra("lat",lat);
                     a.putExtra("lng",lng);
@@ -159,15 +170,14 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
-            rut = (String) b.get("rut");
+            grut = (String) b.get("rut");
+            gdiv = (String) b.get("div");
+            gnombre = (String) b.get("nom");
+            gapellido = (String) b.get("ape");
+            gtelefono = (String) b.get("tel");
+            gemail = (String) b.get("ema");
+
         }
-
-        varglob = (varGlob) getApplicationContext();
-        gdiv = varglob.getDiv();
-        gnombre = varglob.getNombre();
-        gapellido = varglob.getApellido();
-        gtelefono=varglob.getTelefono();
-
     }
 
     public void agregarMarcador(double lat, double lng) {
@@ -343,7 +353,6 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
                 while (count<6) {
                     JSONObject JO = jsonArray.getJSONObject(count);
                     mob = JO.getString("id_mob");
-                    ciu = JO.getString("ciu_driv");
                     lati = Double.parseDouble(JO.getString("lat_driv"));
                     longi = Double.parseDouble(JO.getString("lng_driv"));
                     switch(count){
@@ -415,18 +424,6 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
                 });
             }
         },5000);
-    }
-
-
-    public void registrar(String tipo){
-        Intent m = new Intent(getApplicationContext(), EntreMaps.class);
-        m.putExtra("latitud", lat);
-        m.putExtra("longitud", lng);
-        m.putExtra("ciudad", ciudad);
-        m.putExtra("direccion", direc);
-        m.putExtra("id_mob", id_mob);
-        m.putExtra("tipo", tipo);
-        startActivity(m);
     }
 
     public void escuchaServicios(){

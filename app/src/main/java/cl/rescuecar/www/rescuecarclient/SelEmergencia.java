@@ -69,6 +69,7 @@ public class SelEmergencia extends ConexionMysqlHelper  {
     double lng = 0.0;
     JSONObject jsonObject;
     JSONArray jsonArray;
+    String grut, gdiv, gnombre, gapellido, gtelefono, gemail;
 
 
 
@@ -347,6 +348,12 @@ public class SelEmergencia extends ConexionMysqlHelper  {
                 if (actBom==1){ ConfirmaAlerta.servicios.add(new Servicios("Solicitud ayuda de emergencia",descEmergencia.getText().toString(),"bo",R.mipmap.ic_bom)); }
 
                 Intent m = new Intent(getApplicationContext(), ConfirmaAlerta.class);
+                m.putExtra("rut",grut);
+                m.putExtra("div",gdiv);
+                m.putExtra("nom",gnombre);
+                m.putExtra("ape",gapellido);
+                m.putExtra("tel",gtelefono);
+                m.putExtra("ema",gemail);
                 m.putExtra("lat", lat);
                 m.putExtra("lng", lng);
                 m.putExtra("dir", dir);
@@ -369,26 +376,23 @@ public class SelEmergencia extends ConexionMysqlHelper  {
         recuperarDatos();
     }
 
-
-
-
     private void recuperarDatos() {
         //Recuperar datos
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
+            grut = (String) b.get("rut");
+            gdiv = (String) b.get("div");
+            gnombre = (String) b.get("nom");
+            gapellido = (String) b.get("ape");
+            gtelefono = (String) b.get("tel");
+            gemail = (String) b.get("ema");
             dir = (String) b.get("dir");
             lat = (Double) b.get("lat");
             lng = (Double) b.get("lng");
             direccion.setText(dir);
             //fin recuperar datos
         }
-        varGlob  varglob = (varGlob) getApplicationContext();
-
-        rut = varglob.getRut();
-        div = varglob.getDiv();
-        nom = varglob.getNombre();
-        ape = varglob.getApellido();
 
         eliminarAlertas();
     }
@@ -400,18 +404,13 @@ public class SelEmergencia extends ConexionMysqlHelper  {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new ConexionMysqlHelper.CargarDatos().execute("http://www.webinfo.cl/soshelp/del_alerta.php?rut="+rut);
-                        Toast.makeText(getApplicationContext(),"Rut "+rut+ "Eliminado",Toast.LENGTH_SHORT).show();
-
+                        new ConexionMysqlHelper.CargarDatos().execute("http://www.webinfo.cl/soshelp/del_alerta.php?rut="+grut);
                     }
                 });
             }
         },0);
 
-
     }
-
-
 
     public void escuchaServicios(){
 

@@ -166,16 +166,13 @@ public class RevisaRegistro extends ConexionMysqlHelper {
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Bienvenido " + nom + " " + ape, Toast.LENGTH_SHORT).show();
-
-                                    varglob = (varGlob) getApplicationContext();
-                                    varglob.setRut(rut);
-                                    varglob.setDiv(div);
-                                    varglob.setNombre(nom);
-                                    varglob.setApellido(ape);
-                                    varglob.setTelefono(tel);
-                                    varglob.setEmail(ema);
-
                                     Intent m = new Intent(getApplicationContext(), MapsActivity.class);
+                                    m.putExtra("rut",rut);
+                                    m.putExtra("div",div);
+                                    m.putExtra("nom",nom);
+                                    m.putExtra("ape",ape);
+                                    m.putExtra("tel",tel);
+                                    m.putExtra("ema",ema);
                                     startActivity(m);
                                 }
 
