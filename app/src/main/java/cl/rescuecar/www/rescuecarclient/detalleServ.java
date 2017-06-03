@@ -133,7 +133,7 @@ public class detalleServ extends ConexionMysqlHelper {
         @Override
         protected void onPreExecute() {
 
-            Toast.makeText(getApplicationContext(), "Buscando chofer de servicio", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Buscando chofer de servicio"+rut, Toast.LENGTH_SHORT).show();
 
             json_url = "http://www.webinfo.cl/soshelp/cons_chofer_serv.php?rut="+rut;
 
@@ -186,6 +186,10 @@ public class detalleServ extends ConexionMysqlHelper {
                 jsonArray = jsonObject.getJSONArray("server_response");
 
                 JSONObject JO = jsonArray.getJSONObject(0);
+
+
+
+
                 detalle = JO.getString("detalle");
                 servicios_serv = JO.getString("servicios");
                 calif = JO.getString("calif");
@@ -195,7 +199,7 @@ public class detalleServ extends ConexionMysqlHelper {
                 if (detalle.length() > 2 ) {
                     String[] infoP = detalle.split(",");
                     nombre_serv.setText(infoP[1] + " " + infoP[2]);
-                    telefono_serv.setText("+569" + infoP[4]);
+                    telefono_serv.setText("+569" +infoP[4]);
                     distancia_serv.setText(dist);
                     tiempo_serv.setText(time);
                 }

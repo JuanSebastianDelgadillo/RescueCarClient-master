@@ -45,14 +45,6 @@ public class FormRegister extends ConexionMysqlHelper{
                 gemail = email.getText().toString();
                 gtelefono = telefono.getText().toString();
 
-                varglob = (varGlob) getApplicationContext();
-                varglob.setRut(grut);
-                varglob.setDiv(gdiv);
-                varglob.setNombre(gnombre);
-                varglob.setApellido(gapellido);
-                varglob.setTelefono(gtelefono);
-                varglob.setEmail(gemail);
-
 
                 /****** Agrego en base de datos en otro hilo******/
                 new Handler().postDelayed(new Runnable() {
@@ -70,8 +62,14 @@ public class FormRegister extends ConexionMysqlHelper{
                 },0);
 
                 Toast.makeText(getApplicationContext(),"Bienvenido "+gnombre+" "+gapellido, Toast.LENGTH_SHORT).show();
-                Intent m = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent m = new Intent(getApplicationContext(), FormRegisterVehiculo.class);
                 m.putExtra("rut",grut);
+                m.putExtra("div",gdiv);
+                m.putExtra("nom",gnombre);
+                m.putExtra("ape",gapellido);
+                m.putExtra("tel",gtelefono);
+                m.putExtra("ema",gemail);
+                startActivity(m);
                 startActivity(m);
 
 

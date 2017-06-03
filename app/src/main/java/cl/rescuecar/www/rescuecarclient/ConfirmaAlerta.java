@@ -276,6 +276,7 @@ private void buscarChofer(){
 
         @Override
         protected void onPreExecute() {
+            Toast.makeText(getApplicationContext(), "Tips "+tips, Toast.LENGTH_SHORT).show();
             json_url = "http://www.webinfo.cl/soshelp/cons_chofer.php?rut="+grut+"&tipo="+tips;
         }
 
@@ -351,8 +352,9 @@ private void buscarChofer(){
                     Log.i("Chofer", rut_chofer);
 
 
-                    if (rut_chofer.equals("no")){
+                    Toast.makeText(this, "Chofer"+rut_chofer, Toast.LENGTH_SHORT).show();
 
+                    if (rut_chofer.equals("no")){
 
 
                     }else{
