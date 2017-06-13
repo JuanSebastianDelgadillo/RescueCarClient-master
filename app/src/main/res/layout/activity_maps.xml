@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:background="@color/gris"
         android:orientation="vertical">
 
@@ -93,26 +93,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SU DIRECCIÓN"
-                android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+                android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                android:textSize="8sp" />
 
             <EditText
                 android:id="@+id/etDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/linea"
-                android:textColorHint="@color/grisObscuro"
                 android:inputType="text"
                 android:text="Desconocido"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="13sp" />
+                android:textColorHint="@color/grisObscuro"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LA UBICACIÓN ES APROXIMADA"
-                android:textColor="@color/deshabilitado"
+                android:text="SU VEHÍCULO"
+                android:textColor="@color/common_google_signin_btn_text_light_pressed"
                 android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/tvvehiculo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Vehiculo"
+                android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout

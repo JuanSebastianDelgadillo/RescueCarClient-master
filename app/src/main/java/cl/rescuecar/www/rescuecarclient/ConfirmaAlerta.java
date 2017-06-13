@@ -166,7 +166,6 @@ public class ConfirmaAlerta extends ConexionMysqlHelper{
         if (b != null) {
 
             grut = (String) b.get("rut");
-            Toast.makeText(this, "Rut"+grut, Toast.LENGTH_SHORT).show();
             gdiv = (String) b.get("div");
             gnombre = (String) b.get("nom");
             gapellido = (String) b.get("ape");
@@ -276,7 +275,6 @@ private void buscarChofer(){
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "Tips "+tips, Toast.LENGTH_SHORT).show();
             json_url = "http://www.webinfo.cl/soshelp/cons_chofer.php?rut="+grut+"&tipo="+tips;
         }
 
@@ -351,8 +349,6 @@ private void buscarChofer(){
 
                     Log.i("Chofer", rut_chofer);
 
-
-                    Toast.makeText(this, "Chofer"+rut_chofer, Toast.LENGTH_SHORT).show();
 
                     if (rut_chofer.equals("no")){
 

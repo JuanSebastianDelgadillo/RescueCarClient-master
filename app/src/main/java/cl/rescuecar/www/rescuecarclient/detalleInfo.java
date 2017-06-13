@@ -416,38 +416,39 @@ public class detalleInfo extends ConexionMysqlHelper{
 
                 if (infoC.length >= 1) {
 
-                    int valoracion = Integer.parseInt(infoC[0]);
+                    double valoracion = Double.parseDouble(infoC[0]);
 
-                    Toast.makeText(getApplicationContext(),"Valor : "+valoracion,Toast.LENGTH_SHORT).show();
+                    if (valoracion==1){ star1.setImageResource(R.drawable.starup);}
+                    if (valoracion>1 && valoracion>1){ star1.setImageResource(R.drawable.starup); star2.setImageResource(R.drawable.starmiddle);}
+                    if (valoracion==2){ star1.setImageResource(R.drawable.starup); star2.setImageResource(R.drawable.starup);}
+                    if (valoracion>2 && valoracion<3){star1.setImageResource(R.drawable.starup);
+                        star2.setImageResource(R.drawable.starup);
+                        star3.setImageResource(R.drawable.starmiddle);}
+                    if (valoracion==3){star1.setImageResource(R.drawable.starup);
+                        star2.setImageResource(R.drawable.starup);
+                        star3.setImageResource(R.drawable.starup);}
+                    if (valoracion>3 && valoracion <4){
+                        star1.setImageResource(R.drawable.starup);
+                        star2.setImageResource(R.drawable.starup);
+                        star3.setImageResource(R.drawable.starup);
+                        star4.setImageResource(R.drawable.starmiddle);
 
-                    switch (valoracion){
-
-                        case 1:
-                            star1.setImageResource(R.drawable.starup);
-                            break;
-                        case 2:
-                            star1.setImageResource(R.drawable.starup);
-                            star2.setImageResource(R.drawable.starup);
-                            break;
-                        case 3:
-                            star1.setImageResource(R.drawable.starup);
-                            star2.setImageResource(R.drawable.starup);
-                            star3.setImageResource(R.drawable.starup);
-                            break;
-                        case 4:
-                            star1.setImageResource(R.drawable.starup);
-                            star2.setImageResource(R.drawable.starup);
-                            star3.setImageResource(R.drawable.starup);
-                            star4.setImageResource(R.drawable.starup);
-                            break;
-                        case 5:
-                            star1.setImageResource(R.drawable.starup);
-                            star2.setImageResource(R.drawable.starup);
-                            star3.setImageResource(R.drawable.starup);
-                            star4.setImageResource(R.drawable.starup);
-                            star5.setImageResource(R.drawable.starup);
-                            break;
                     }
+
+                    if (valoracion==4){ star1.setImageResource(R.drawable.starup);
+                        star2.setImageResource(R.drawable.starup);
+                        star3.setImageResource(R.drawable.starup);
+                        star4.setImageResource(R.drawable.starup);}
+
+                    if (valoracion>5){
+                        star1.setImageResource(R.drawable.starup);
+                        star2.setImageResource(R.drawable.starup);
+                        star3.setImageResource(R.drawable.starup);
+                        star4.setImageResource(R.drawable.starup);
+                        star5.setImageResource(R.drawable.starup);
+
+                    }
+
 
                 }else{
 

@@ -70,7 +70,8 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
     EditText Direccion;
     int prop=0,servicioGPS=0, servicioInt=0;
     String rut, div, nom, ape, dir;
-    String grut, gdiv, gnombre, gapellido,gtelefono, gemail;
+    String grut, gdiv, gnombre, gapellido,gtelefono, gemail, gveh;
+    TextView vehiculo;
     varGlob varglob;
 
     @Override
@@ -93,6 +94,7 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
         Direccion = (EditText) findViewById(R.id.etDireccion);
         btAlerta = (Button) findViewById(R.id.btAlerta);
         btCancelar = (Button) findViewById(R.id.btCancelar);
+        vehiculo = (TextView) findViewById(R.id.tvvehiculo);
         btAlerta.setEnabled(false);
         btAlerta.setBackgroundColor(Color.LTGRAY);
         Direccion.setEnabled(false);
@@ -143,7 +145,7 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
                 }
             }
         });
-
+        agregaGruas();
     }
 
     @Override
@@ -176,7 +178,8 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
             gapellido = (String) b.get("ape");
             gtelefono = (String) b.get("tel");
             gemail = (String) b.get("ema");
-
+            gveh = (String) b.get("veh");
+            vehiculo.setText(gveh);
         }
     }
 
@@ -442,6 +445,7 @@ public class MapsActivity extends ConexionMysqlHelper implements OnMapReadyCallb
         if (cm.getActiveNetworkInfo() != null){
             internet.setImageResource(R.drawable.int_si);
             servicioInt=1;
+
         }else{
             internet.setImageResource(R.drawable.int_no);
             Toast.makeText(getApplicationContext(),"¡¡ Tu teléfono no esta conectado a internet!!", Toast.LENGTH_SHORT).show();

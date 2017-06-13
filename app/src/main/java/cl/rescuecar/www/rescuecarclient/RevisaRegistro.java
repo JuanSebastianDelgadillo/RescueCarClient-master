@@ -2,6 +2,7 @@ package cl.rescuecar.www.rescuecarclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Chronometer;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -36,21 +39,20 @@ public class RevisaRegistro extends ConexionMysqlHelper {
     JSONArray jsonArray;
     int servicioInt=0, intentos=0;
     varGlob varglob;
+    int intentar=0;
+    TextView verificando;
+    String grut, gdiv, gnom, gape, gtel, gema;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revisa_registro);
+        verificando = (TextView) findViewById(R.id.tvVerificando);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         //CapturaIdDispositivo
         id_mob = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         //Termino carga de ID dispositivo
-
         escuchaServicios();
 
     }
@@ -59,14 +61,13 @@ public class RevisaRegistro extends ConexionMysqlHelper {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm.getActiveNetworkInfo() != null){
-            servicioInt=1;
             ConsultarDatos();
 
         }else {
             intentos++;
 
-            if (intentos <= 3) {
-                Toast.makeText(getApplicationContext(), "¡¡ Tu teléfono no esta conectado a internet!!", Toast.LENGTH_SHORT).show();
+            if (intentos <= 5) {
+
                 servicioInt = 0;
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -74,6 +75,9 @@ public class RevisaRegistro extends ConexionMysqlHelper {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (intentos==1){ verificando.setText("Estamos verificando tu conexión....");}
+                                if (intentos==3){ verificando.setText("Al parecer tu conexión esta demorando mas de lo normal");}
+                                if (intentos==4){ verificando.setText("¡ Error ! no tienes internet y se cerrará la aplicación.");}
                                 escuchaServicios();
                             }
                         });
@@ -148,31 +152,30 @@ public class RevisaRegistro extends ConexionMysqlHelper {
                             try {
                                 jsonObject = new JSONObject(json_string);
                                 jsonArray = jsonObject.getJSONArray("server_response");
-                                String rut, div, nom, ape, tel, ema;
                                 int count = 0;
 
                                 JSONObject JO = jsonArray.getJSONObject(count);
-                                rut = JO.getString("rut_user");
-                                div = JO.getString("dig_user");
-                                nom = JO.getString("nom_user");
-                                ape = JO.getString("ape_user");
-                                tel = JO.getString("tel_user");
-                                ema = JO.getString("ema_user");
+                                grut = JO.getString("rut_user");
+                                gdiv = JO.getString("dig_user");
+                                gnom = JO.getString("nom_user");
+                                gape = JO.getString("ape_user");
+                                gtel = JO.getString("tel_user");
+                                gema = JO.getString("ema_user");
 
-                                if (rut.equals("no")) {
-                                    Toast.makeText(getApplicationContext(), "No se encuentra registrado!!", Toast.LENGTH_SHORT).show();
+                                if (grut.equals("no")) {
+                                    Toast.makeText(getApplicationContext(), "¡¡ No se encuentra registrado !!", Toast.LENGTH_SHORT).show();
                                     Intent m = new Intent(getApplicationContext(), FormRegister.class);
                                     startActivity(m);
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Bienvenido " + nom + " " + ape, Toast.LENGTH_SHORT).show();
-                                    Intent m = new Intent(getApplicationContext(), MapsActivity.class);
-                                    m.putExtra("rut",rut);
-                                    m.putExtra("div",div);
-                                    m.putExtra("nom",nom);
-                                    m.putExtra("ape",ape);
-                                    m.putExtra("tel",tel);
-                                    m.putExtra("ema",ema);
+                                    Toast.makeText(getApplicationContext(), "¡ Bienvenido " + gnom + " " + gape+" !", Toast.LENGTH_SHORT).show();
+                                    Intent m = new Intent(getApplicationContext(), RevisaVehiculo.class);
+                                    m.putExtra("rut",grut);
+                                    m.putExtra("div",gdiv);
+                                    m.putExtra("nom",gnom);
+                                    m.putExtra("ape",gape);
+                                    m.putExtra("tel",gtel);
+                                    m.putExtra("ema",gema);
                                     startActivity(m);
                                 }
 
@@ -182,7 +185,14 @@ public class RevisaRegistro extends ConexionMysqlHelper {
                             }
                         } else {
 
-                            Toast.makeText(getApplicationContext(), "No esta registrado¡¡¡¡¡", Toast.LENGTH_SHORT).show();
+                            if(intentar==30){
+
+                                Toast.makeText(getApplicationContext(), "¡ Los intentos de conexion han fracasado !", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            Toast.makeText(getApplicationContext(), "¡¡ No hay conexion !!", Toast.LENGTH_SHORT).show();
+                            intentar++;
+                            ConsultarDatos();
                         }
                     }
                 });
